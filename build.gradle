@@ -1,0 +1,22 @@
+apply plugin: 'maven'
+apply plugin: 'eclipse'
+apply plugin: 'java'
+apply plugin: 'groovy'
+
+group = 'uqbar'
+version = '1.0-SNAPSHOT'
+
+dependencies {
+   groovy 'org.codehaus.groovy:groovy:2.0.3'
+
+   compile 'uqbar:arena:3.0.1-SNAPSHOT' 
+}
+
+repositories {
+  mavenCentral()
+  mavenLocal()
+  maven { url 'http://tpi.unq.edu.ar/maven/releases/' }
+  maven { url 'http://tpi.unq.edu.ar/maven/snapshots/'  }
+  maven { url 'http://uqbar-wiki.org/mvn/releases' }
+  maven { url 'http://uqbar-wiki.org/mvn/snapshots' }
+}
