@@ -10,6 +10,7 @@ dependencies {
    groovy 'org.codehaus.groovy:groovy:2.0.3'
 
    compile 'uqbar:arena:3.0.1-SNAPSHOT' 
+   compile 'org.slf4j:slf4j-api:1.6.1'
 }
 
 repositories {
@@ -19,4 +20,13 @@ repositories {
   maven { url 'http://tpi.unq.edu.ar/maven/snapshots/'  }
   maven { url 'http://uqbar-wiki.org/mvn/releases' }
   maven { url 'http://uqbar-wiki.org/mvn/snapshots' }
+}
+
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "http://uqbar-wiki.org/mvn/snapshots")
+        }
+    }
 }
