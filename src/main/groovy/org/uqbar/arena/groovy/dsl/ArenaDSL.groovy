@@ -4,6 +4,7 @@ import groovy.lang.Closure
 import groovy.transform.PackageScope
 
 import org.uqbar.arena.bindings.DateAdapter
+import org.uqbar.arena.groovy.GroovyArenaExtensions;
 import org.uqbar.arena.groovy.dsl.binding.PropertyBindingMixin;
 import org.uqbar.arena.groovy.dsl.binding.TransformedPropertyBinding;
 import org.uqbar.arena.groovy.dsl.binding.TransformerBindingMixin;
@@ -21,6 +22,7 @@ import org.uqbar.lacar.ui.model.Action
 import org.uqbar.lacar.ui.model.adapter.NotEmptyTransformer
 import org.uqbar.lacar.ui.model.adapter.NotNullTransformer
 
+import org.uqbar.arena.groovy.GroovyArenaExtensions.*
 import com.uqbar.commons.collections.Transformer
 
 /**
@@ -33,16 +35,9 @@ import com.uqbar.commons.collections.Transformer
  * @author flbulgarelli
  *
  */
-class GroovyArenaExtensions {
+class ArenaDSL {
 
-  static def action(Closure closure) {
-    closure as Action
-  }
-  
-  static def transformer(Closure closure) {
-    closure as Transformer
-  }
-  
+
   private static makeDescriptive(Target) {
     def wrap = {
       if(it instanceof Container)

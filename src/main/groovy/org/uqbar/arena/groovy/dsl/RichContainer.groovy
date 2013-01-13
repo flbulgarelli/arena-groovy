@@ -7,7 +7,7 @@ import org.reflections.Reflections
 import org.uqbar.arena.widgets.Container
 import org.uqbar.arena.widgets.Widget
 import org.uqbar.commons.model.IModel
-import static org.uqbar.arena.groovy.dsl.GroovyArenaExtensions.*
+import static org.uqbar.arena.groovy.dsl.ArenaDSL.*
 /**
  * Wrapper de {@link Container}, que entiende mensajes para 
  * crear widgets estandar hijos.
