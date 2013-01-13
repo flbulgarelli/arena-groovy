@@ -20,28 +20,14 @@ import org.uqbar.commons.model.IModel
  * 
  * @author flbulgarelli
  */
-class RichContainer implements Container {
-
-  def container
+class RichContainer extends Proxy implements Container {
 
   IModel<?> getModel() {
-    container.model
+    target.model
   }
 
   void addChild(Widget child) {
-    container.addChild(child)
-  }
-
-  def methodMissing(String name, args) {
-    container.invokeMethod(name, args)
-  }
-
-  def propertyMissing(String name) {
-    container."$name"
-  }
-
-  def propertyMissing(String name, value) {
-    container."$name" = value
+    target.addChild(child)
   }
 
   static {
@@ -53,7 +39,7 @@ class RichContainer implements Container {
         if (configurations.size() > 2)
           throw new MissingMethodException(selector, RichContainer, args)
           
-        def widget = ConcreteWidget.newInstance([delegate.container]as Object[])
+        def widget = ConcreteWidget.newInstance([delegate.target]as Object[])
         def (bindings, description) = bindingsAndDescription(widget, configurations)
         widget.describe(description)
         widget.bind(bindings)    
