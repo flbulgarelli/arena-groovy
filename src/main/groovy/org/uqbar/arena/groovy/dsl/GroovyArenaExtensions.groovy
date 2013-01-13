@@ -10,8 +10,11 @@ import org.uqbar.arena.widgets.Button
 import org.uqbar.arena.widgets.Container
 import org.uqbar.arena.widgets.Selector
 import org.uqbar.arena.widgets.Widget
+import org.uqbar.arena.widgets.tables.Column;
+import org.uqbar.arena.widgets.tables.Table;
 import org.uqbar.arena.widgets.tree.Tree
 import org.uqbar.arena.windows.Dialog
+import org.uqbar.arena.windows.Window;
 import org.uqbar.commons.model.IModel
 import org.uqbar.lacar.ui.model.Action
 
@@ -30,9 +33,9 @@ class GroovyArenaExtensions {
   static def action(Closure closure) {
     closure as Action
   }
-
-  private static makeDescriptive() {
-    Widget.metaClass.describe = { description ->
+  
+  private static makeDescriptive(Target) {
+    Target.metaClass.describe = { description ->
         def thisWidget = delegate
         def described = thisWidget instanceof Container ?
             new RichContainer(container: thisWidget) :
@@ -45,8 +48,8 @@ class GroovyArenaExtensions {
     }
   }
   
-  private static makeBindable() {
-    Widget.metaClass.bind = { Map bindings ->
+  private static makeBindable(Target) {
+    Target.metaClass.bind = { Map bindings ->
       def thisWidget = delegate
       bindings.each { binding, property ->
         //fea consideración, habría que cambiar Arena para que respete una convencion
@@ -74,8 +77,11 @@ class GroovyArenaExtensions {
   }
 
   static {
-    makeDescriptive()
-    makeBindable()
+    makeDescriptive(Widget)
+    makeDescriptive(Window)
+    makeDescriptive(Column)
+    makeDescriptive(Table)
+    makeBindable(Widget)
     supportClosuresAsActions()
   }
 }
