@@ -41,8 +41,8 @@ class RichContainer extends Proxy implements Container {
           
         def widget = ConcreteWidget.newInstance([delegate.target]as Object[])
         def (bindings, description) = bindingsAndDescription(widget, configurations)
-        widget.describe(description)
         widget.bind(bindings)    
+        widget.describe(description)
       }
     }
   }
