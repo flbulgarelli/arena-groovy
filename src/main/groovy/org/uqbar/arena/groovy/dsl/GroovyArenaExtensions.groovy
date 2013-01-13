@@ -67,16 +67,20 @@ class GroovyArenaExtensions {
   }
 
   private static supportClosuresAsActions() {
-    [
+    supportClosures([
       [Selector, 'onSelection'],
       [Tree, 'onClickItem'],
       [Tree, 'onExpand'],
       [Dialog, 'onAccept'],
       [Dialog, 'onCancel'],
       [Button, 'onClick']
-    ].each { ConcreteWidget, selector ->
-      ConcreteWidget.metaClass."$selector" = { Closure actionClosure ->
-        delegate."$selector"(action(actionClosure))
+    ], GroovyArenaExtensions.&action)
+  }
+  
+  private static supportClosures(classesAndSelectors, transformation) {
+    classesAndSelectors.each { ConcreteWidget, selector ->
+      ConcreteWidget.metaClass."$selector" = { Closure closure ->
+        delegate."$selector"(transformation(closure))
       }
     }
   }
