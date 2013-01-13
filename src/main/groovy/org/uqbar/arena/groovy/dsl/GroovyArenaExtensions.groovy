@@ -1,26 +1,27 @@
 package org.uqbar.arena.groovy.dsl
 
-import java.lang.reflect.Modifier
-
 import groovy.lang.Closure
-import groovy.transform.PackageScope;
+import groovy.transform.PackageScope
 
-import org.apache.commons.lang.WordUtils
-import org.reflections.Reflections
+import org.uqbar.arena.bindings.DateAdapter
+import org.uqbar.arena.groovy.dsl.binding.PropertyBindingMixin;
+import org.uqbar.arena.groovy.dsl.binding.TransformedPropertyBinding;
+import org.uqbar.arena.groovy.dsl.binding.TransformerBindingMixin;
 import org.uqbar.arena.widgets.Button
 import org.uqbar.arena.widgets.Container
 import org.uqbar.arena.widgets.Selector
 import org.uqbar.arena.widgets.Widget
-import org.uqbar.arena.widgets.tables.Column;
-import org.uqbar.arena.widgets.tables.Table;
+import org.uqbar.arena.widgets.tables.Column
+import org.uqbar.arena.widgets.tables.Table
 import org.uqbar.arena.widgets.tree.Tree
-import org.uqbar.arena.widgets.tree.TreeNode;
+import org.uqbar.arena.widgets.tree.TreeNode
 import org.uqbar.arena.windows.Dialog
-import org.uqbar.arena.windows.Window;
-import org.uqbar.commons.model.IModel
+import org.uqbar.arena.windows.Window
 import org.uqbar.lacar.ui.model.Action
+import org.uqbar.lacar.ui.model.adapter.NotEmptyTransformer
+import org.uqbar.lacar.ui.model.adapter.NotNullTransformer
 
-import com.uqbar.commons.collections.Transformer;
+import com.uqbar.commons.collections.Transformer
 
 /**
  * Agrega soporte para:
@@ -63,12 +64,12 @@ class GroovyArenaExtensions {
 
     }
   }
-  
+   
   private static makeBindable(Target) {
     Target.metaClass.bind = { Map bindings ->
       def thisWidget = delegate
-      bindings.each { binding, property ->
-        thisWidget."bind${binding.capitalize()}ToProperty"(property)
+      bindings.each { bindingName, bindingValue ->
+        bindingValue.configureBinding(bindingName.capitalize(), thisWidget)
       }
     }
   }
@@ -118,6 +119,9 @@ class GroovyArenaExtensions {
   }
 
   static {
+    String.mixin(PropertyBindingMixin)
+    Closure.mixin(TransformerBindingMixin)
+    
     makeDescriptive(Window)
     
     [Widget, Column].each {
