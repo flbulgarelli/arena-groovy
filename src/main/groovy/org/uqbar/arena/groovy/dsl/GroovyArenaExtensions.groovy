@@ -60,11 +60,7 @@ class GroovyArenaExtensions {
     Target.metaClass.bind = { Map bindings ->
       def thisWidget = delegate
       bindings.each { binding, property ->
-        //fea consideración, habría que cambiar Arena para que respete una convencion
-        if(binding == "contents")
-          thisWidget.bindContents(property)
-        else
-          thisWidget."bind${binding.capitalize()}ToProperty"(property)
+        thisWidget."bind${binding.capitalize()}ToProperty"(property)
       }
     }
   }
