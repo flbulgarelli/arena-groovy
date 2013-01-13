@@ -47,6 +47,7 @@ class GroovyArenaExtensions {
         def thisWidget = delegate
         def descriptiveWrapper = wrap(thisWidget)
         description.clone().with {
+          it.resolveStrategy = Closure.DELEGATE_ONLY 
           it.delegate = descriptiveWrapper
           it(thisWidget)
         }
