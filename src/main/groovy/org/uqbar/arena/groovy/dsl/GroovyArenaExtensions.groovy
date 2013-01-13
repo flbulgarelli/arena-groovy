@@ -14,10 +14,13 @@ import org.uqbar.arena.widgets.Widget
 import org.uqbar.arena.widgets.tables.Column;
 import org.uqbar.arena.widgets.tables.Table;
 import org.uqbar.arena.widgets.tree.Tree
+import org.uqbar.arena.widgets.tree.TreeNode;
 import org.uqbar.arena.windows.Dialog
 import org.uqbar.arena.windows.Window;
 import org.uqbar.commons.model.IModel
 import org.uqbar.lacar.ui.model.Action
+
+import com.uqbar.commons.collections.Transformer;
 
 /**
  * Agrega soporte para:
@@ -33,6 +36,10 @@ class GroovyArenaExtensions {
 
   static def action(Closure closure) {
     closure as Action
+  }
+  
+  static def transformer(Closure closure) {
+    closure as Transformer
   }
   
   private static makeDescriptive(Target) {
@@ -77,6 +84,13 @@ class GroovyArenaExtensions {
     ], GroovyArenaExtensions.&action)
   }
   
+  private static supportClosuresAsTransformers() {
+    supportClosures([
+      [Column, 'bindContentsToTransformer'],
+      [TreeNode, 'bindContentsToTransformer'],
+    ], GroovyArenaExtensions.&transformer)
+  }
+  
   private static supportClosures(classesAndSelectors, transformation) {
     classesAndSelectors.each { ConcreteWidget, selector ->
       ConcreteWidget.metaClass."$selector" = { Closure closure ->
@@ -114,6 +128,7 @@ class GroovyArenaExtensions {
     makeDescriptive(Table)
     
     supportClosuresAsActions()
+    supportClosuresAsTransformers()
   }
 }
 
