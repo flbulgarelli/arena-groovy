@@ -35,16 +35,23 @@ class GroovyArenaExtensions {
   }
   
   private static makeDescriptive(Target) {
+    def wrap = { 
+      if(it instanceof Container)
+        new RichContainer(target: it)
+      else if(it instanceof Table)
+        new RichTable(target: it)
+      else
+        new Proxy(target: it)
+    }
     Target.metaClass.describe = { description ->
         def thisWidget = delegate
-        def described = thisWidget instanceof Container ?
-            new RichContainer(container: thisWidget) :
-            thisWidget
+        def descriptiveWrapper = wrap(thisWidget)
         description.clone().with {
-          it.delegate = described
+          it.delegate = descriptiveWrapper
           it(thisWidget)
         }
         thisWidget
+
     }
   }
   
