@@ -100,11 +100,15 @@ class GroovyArenaExtensions {
   }
 
   static {
-    makeDescriptive(Widget)
     makeDescriptive(Window)
-    makeDescriptive(Column)
+    
+    [Widget, Column].each {
+      makeDescriptive(it)
+      makeBindable(it)
+    }
+    
     makeDescriptive(Table)
-    makeBindable(Widget)
+    
     supportClosuresAsActions()
   }
 }
