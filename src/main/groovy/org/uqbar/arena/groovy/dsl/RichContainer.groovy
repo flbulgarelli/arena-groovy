@@ -7,7 +7,7 @@ import org.reflections.Reflections
 import org.uqbar.arena.widgets.Container
 import org.uqbar.arena.widgets.Widget
 import org.uqbar.commons.model.IModel
-
+import static org.uqbar.arena.groovy.dsl.GroovyArenaExtensions.*
 /**
  * Wrapper de {@link Container}, que entiende mensajes para 
  * crear widgets estandar hijos.
@@ -31,26 +31,12 @@ class RichContainer extends Proxy implements Container {
   }
 
   static {
-    standardWidgets.each { ConcreteWidget ->
-      def selector = selectorForWidget(ConcreteWidget)
+    standardWidgets.each { Widget ->
+      def selector = selectorForWidget(Widget)
       RichContainer.metaClass."${selector}" = {  ... args ->
-        def configurations = Arrays.asList(args)
-        
-        if (configurations.size() > 2)
-          throw new MissingMethodException(selector, RichContainer, args)
-          
-        def widget = ConcreteWidget.newInstance([delegate.target]as Object[])
-        def (bindings, description) = bindingsAndDescription(widget, configurations)
-        widget.bind(bindings)    
-        widget.describe(description)
+        bindAndDescribe(RichContainer, delegate.target, Widget, selector, args)
       }
     }
-  }
-  
-  private static bindingsAndDescription(widget, configurations) {
-    def bindings = configurations.find { it instanceof Map } ?: [:]
-    def description = configurations.find { it instanceof Closure } ?: {}
-    [bindings, description]
   }
 
   static selectorForWidget(ConcreteWidget) {

@@ -3,6 +3,7 @@ package org.uqbar.arena.groovy.dsl
 import java.lang.reflect.Modifier
 
 import groovy.lang.Closure
+import groovy.transform.PackageScope;
 
 import org.apache.commons.lang.WordUtils
 import org.reflections.Reflections
@@ -35,7 +36,7 @@ class GroovyArenaExtensions {
   }
   
   private static makeDescriptive(Target) {
-    def wrap = { 
+    def wrap = {
       if(it instanceof Container)
         new RichContainer(target: it)
       else if(it instanceof Table)
@@ -78,6 +79,24 @@ class GroovyArenaExtensions {
         delegate."$selector"(action(actionClosure))
       }
     }
+  }
+  
+  @PackageScope static bindAndDescribe(Container, container, Widget, selector, args) {
+    def configurations = Arrays.asList(args)
+    
+    if (configurations.size() > 2)
+      throw new MissingMethodException(selector, Container, args)
+      
+    def widget = Widget.newInstance([container]as Object[])
+    def (bindings, description) = bindingsAndDescription(widget, configurations)
+    widget.bind(bindings)
+    widget.describe(description)
+  }
+  
+  private static bindingsAndDescription(widget, configurations) {
+    def bindings = configurations.find { it instanceof Map } ?: [:]
+    def description = configurations.find { it instanceof Closure } ?: {}
+    [bindings, description]
   }
 
   static {
