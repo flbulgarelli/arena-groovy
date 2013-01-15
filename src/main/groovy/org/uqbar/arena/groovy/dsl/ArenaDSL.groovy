@@ -112,6 +112,25 @@ class ArenaDSL {
     def description = configurations.find { it instanceof Closure } ?: {}
     [bindings, description]
   }
+  
+  static registerContainerExtension(selector, block) {
+    registerExtensionTo(RichContainer, selector, block)
+  }
+  
+  static registerExtension(selector, block) {
+    registerExtensionTo(Proxy, selector, block)
+  }
+  
+  static registerTableExtension(selector, block) {
+    registerExtensionTo(RichTable, selector, block)
+  }
+  
+  private static registerExtensionTo(Proxy, selector, block) {
+    Proxy.metaClass."${selector}" = { ...args->
+      block.curry(delegate).call(args)
+    }
+  }
+
 
   static {
     String.mixin(PropertyBindingMixin)
