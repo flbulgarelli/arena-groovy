@@ -63,9 +63,9 @@ Dentro del bloque descriptor, podemos ejecutar cualquier código groovy valido, 
   }
 ```
 
-Como se puede observar, dentro de un bloque ```describe``` las conversiones de bloque de código a Trasnformer o Action son implícitas (no fue necesario el uso del método ```action``` en la registración de ```onClick```.
+Como se puede observar, dentro de un bloque ```describe``` las conversiones de bloque de código a Transformer o Action son implícitas (no fue necesario el uso del método ```action``` en la registración de ```onClick```).
 
-Nótese también que __el uso explícito de la referencia ```this``` es obligatorio dentro del bloque describe__, ya que como se señaló antes, los mensajes con receptor implícito son ruteados al componte descriptor. 
+Nótese también que __el uso explícito de la referencia ```this``` es obligatoria dentro del bloque describe__, ya que como se señaló antes, los mensajes con receptor implícito son ruteados al componte descriptor. 
 
 Dado que esta forma de insertar hijos en un contenedor es tan común, cuando el componente descripto es un contenedor (implenta ```Container```), el DSL de Arena expone dentro del bloque descripción atajos para crear hijos estándares (cualquiera de los Widgets concretos provistos por el jar de Arena en ```org.uqbar.arena.widgets```). Ejemplo: 
 
@@ -91,11 +91,11 @@ El ejemplo completo se encuentra [aquí](https://github.com/flbulgarelli/ejercic
 
 ## Binding básico
 
-Para establecer el binding entre las propiedades de los componentes de vista y las propiedades del modelo de la vista/aplicación, Arena expone mensajes de la forma ```bindXYZToProperty(propiedad)```, donde XYZ es justamente esa propiedad dl componente visual a enlazar. 
+Para establecer el binding entre las propiedades de los componentes de vista y las propiedades del modelo de la vista/aplicación, Arena expone mensajes de la forma ```bindXYZToProperty(propiedad)```, donde XYZ es justamente esa propiedad del componente visual a enlazar. 
 
-Si bien es posible enviar expliícitamente estos mensajes dentro de un bloque descriptor, por ejemplo
+Si bien es posible enviar explícitamente estos mensajes dentro de un bloque descriptor, por ejemplo:
 
-```
+```groovy
   mainPanel.describe {
     //...
     textBox { 
@@ -175,7 +175,7 @@ El ejemplo completo se encuentra [aquí](https://github.com/flbulgarelli/ejercic
 
 ## Extensiones
 
-No hay que olvidarse de que a fin de cuentas, el DSL es código Groovy, por lo que es suceptible de, por ejemplo, extraer extraer partes de la descripción a otros métodos. Por ejemplo, para introducir un _template method_:
+No hay que olvidarse de que a fin de cuentas, el DSL es código Groovy, por lo que es susceptible de, por ejemplo, extraer partes de la descripción a otros métodos. Por ejemplo, para introducir un _template method_:
 
 ```groovy
   void createResultsGrid(Panel mainPanel) {
