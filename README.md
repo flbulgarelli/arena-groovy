@@ -43,7 +43,7 @@ El DSL agrega a todos los componentes el método ```describe```. que toma un blo
   }
 ```
 
-Dentro del bloque descriptor, podemos ejecutar cualquier código groovy valido, referenciando al componente descripto mediante el parámetro ```it```. Además, mensajes y propierdades con receptor implícito son automáticamente ruteados a ```it```. De esta forma, podemos instanciar otros componentes que sean hijos, de la siguiente forma:
+Dentro del bloque descriptor, podemos ejecutar cualquier código groovy valido, referenciando al componente descripto mediante el parámetro ```it```. Además, mensajes y propiedades con receptor implícito son automáticamente ruteados a ```it```. De esta forma, podemos instanciar otros componentes que sean hijos, de la siguiente forma:
 
 
 ```groovy
