@@ -5,6 +5,10 @@ import org.uqbar.arena.windows.MainWindow
 
 @SuppressWarnings("unchecked")
 abstract class GroovyMainWindow extends MainWindow {
+  
+  GroovyMainWindow(model) {
+    super(model)
+  }
 
   static {
     ArenaDSL
