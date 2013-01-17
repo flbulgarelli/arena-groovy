@@ -30,7 +30,9 @@ allprojects {
 dependencies {
   groovy 'org.codehaus.groovy:groovy:2.0.3'
 
-  compile 'uqbar:arena:3.0.1-SNAPSHOT'
+  compile('uqbar:arena:3.0.1-SNAPSHOT') {
+    exclude group: 'asm', module: 'asm'
+  }
   compile 'org.slf4j:slf4j-api:1.6.1'
 }
 
