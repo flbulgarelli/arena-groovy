@@ -12,7 +12,7 @@ Arena-Groovy provee integración entre el framework educativo de presentación [
 
 # Integración básica
 
-Dado que tanto Arena es un framework de presentación para la JVM, es posible desarrollar aplicaciones Arena usando el lenguje Groovy de forma nativa (existen sin embargo mínimas incompatiilidades, actualmente la versión compatible se encuentra en [este fork](https://github.com/flbulgarelli/arena)).
+Dado que Arena es un framework de presentación para la JVM, es posible desarrollar aplicaciones Arena usando el lenguje Groovy de forma nativa.
 
 Sin embargo, siendo que Groovy posee bloques de código, puede resultar útil empelar los mismos para definir Action's y Transformer's. Para lograr esto, basta con hacer ```import static``` de  ```org.uqbar.arena.groovy.GroovyArenaExtensions```. Ejemplo:
 
